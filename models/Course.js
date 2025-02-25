@@ -4,22 +4,26 @@ const courseCategory = require('./courseCategory');
 const User = require('./User');
 
 
-const Course = sequelize.define('Course', {
+const Course = sequelize.define('Courses', {
   id: {
-    type: DataTypes.INTEGER,
-    defaultValue: DataTypes.INTEGER,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
   title: {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  price:{
+    type: DataTypes.INTEGER,
+    allowNull:true,
+  },
   description: {
     type: DataTypes.TEXT,
     allowNull: true,
   },
   instructorId: {
-     type:DataTypes.INTEGER,
+     type:DataTypes.UUID,
      allowNull:false,
      references:{
       model:User,
@@ -28,7 +32,7 @@ const Course = sequelize.define('Course', {
      onDelete:'CASCADE',   
   },
   categoryId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
       model: courseCategory,
@@ -37,7 +41,9 @@ const Course = sequelize.define('Course', {
     onDelete: 'CASCADE', // If a category is deleted, its courses are also deleted
   },
 }, {
+  tableName:"Courses",
   timestamps: true,
+  underscored: true,
 });
 
 module.exports = Course;

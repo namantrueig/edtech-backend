@@ -1,6 +1,6 @@
 'use strict';
 
-const { courseCategory,User } = require("../models");
+
 
 
 
@@ -8,8 +8,8 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Courses', {
       id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.literal("gen_random_uuid()"),
         primaryKey: true,
         allowNull: false,
       },
@@ -27,7 +27,7 @@ module.exports = {
         defaultValue: 0.0,
       },
       categoryId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
         references: {
           model: 'CourseCategory', // References the CourseCategories table
@@ -36,7 +36,7 @@ module.exports = {
         onDelete: 'CASCADE', // If a category is deleted, its courses are deleted
       },
       instructorId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
         references: {
           model: 'Users', // References the Users table

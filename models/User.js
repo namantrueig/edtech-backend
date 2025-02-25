@@ -20,8 +20,10 @@ const User = sequelize.define('User', {
         key:"id",
       },
       onDelete: 'CASCADE',
-    },
+    }
    
+  },{
+    tableName:"Users",
   });
 
 

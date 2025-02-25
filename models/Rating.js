@@ -3,14 +3,14 @@ const sequelize = require('../config/db'); // Database connection
 const User = require('./User'); // Importing User model
 const Course = require('./Course'); // Importing Course model
 
-const Rating = sequelize.define('Rating', {
+const Rating = sequelize.define('Ratings', {
   id: {
-    type: DataTypes.INTEGER,
-    defaultValue: DataTypes.INTEGER,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
   studentId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
       model: User,
@@ -19,7 +19,7 @@ const Rating = sequelize.define('Rating', {
     onDelete: 'CASCADE', // Delete ratings if the student is deleted
   },
   courseId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
       model: Course,
@@ -28,7 +28,7 @@ const Rating = sequelize.define('Rating', {
     onDelete: 'CASCADE', // Delete ratings if the course is deleted
   },
   rating: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
     validate: {
       min: 1,
@@ -41,6 +41,8 @@ const Rating = sequelize.define('Rating', {
   },
 }, {
   timestamps: true, 
+},{
+  tableName:"Ratings",
 });
 
 module.exports = Rating;

@@ -1,31 +1,38 @@
 const express = require("express");
-const  {User,Rating,Course,courseCategory}  = require("./models");
+// const  {User,Rating,Course,courseCategory}  = require("./models");
+
+const dotenv = require("dotenv");
+const authRoutes = require("./routes/authRoutes");
+const courseRoutes = require("./routes/courseRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
+const ratingRoutes = require("./routes/ratingRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 
-const {sequelize}=require("./config/db");
+const sequelize=require("./config/db");
 
 
 
 
 const app = express();
 
+app.use(express.json()); // Middleware to parse JSON
+
+// Authentication Routes
+app.use("/api/auth", authRoutes);
+
+// Course Routes
+app.use("/api/courses", courseRoutes);
 
 
-// Middleware to parse JSON request body
-app.use(express.json());
+// Category Routes
+app.use("/api/categories", categoryRoutes);
 
-// POST route to create a user
-app.post("/users", async (req, res) => {
-  try {
-    // Use 'create' method to insert data
-    const user = await User.create(req.body);
-    res.status(201).json(user);  // Send response with created user
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
+app.use("/api/ratings", ratingRoutes);
 
-// sequelize.sync({force:true});
+app.use("/api/users", userRoutes);
+
+
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");

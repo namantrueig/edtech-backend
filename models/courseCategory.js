@@ -17,6 +17,7 @@ const courseCategory = sequelize.define('CourseCategory', {
     allowNull: true,
   },
 }, {
+  tableName: "CourseCategory",
   timestamps: true, // Adds createdAt & updatedAt fields
 });
 
