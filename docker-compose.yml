@@ -1,0 +1,39 @@
+# version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: edtech_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: naman
+      POSTGRES_DB: edtech_db
+    ports:
+      - "5432:5432"
+      
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+      
+
+  app:
+    build: .
+    container_name: edtech_app
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: edtech_db
+      DB_USER: postgres
+      DB_PASSWORD: naman
+      DB_NAME: edtech_db
+    ports:
+      - "5000:2000"
+      
+    volumes:
+      - .:/app
+    command: ["npm", "start"]
+
+volumes:
+  pgdata:
